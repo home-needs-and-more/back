@@ -4,6 +4,7 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { databaseConfig, envConfig } from './config/environment.config';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { JobsModule } from './jobs/jobs.module';
 import typeOrmConfig from './config/typeorm.config';
 
 @Module({
@@ -20,6 +21,7 @@ import typeOrmConfig from './config/typeorm.config';
       useFactory: typeOrmConfig,
       inject: [ConfigService],
     }),
+    JobsModule,
   ],
   controllers: [AppController],
   providers: [AppService],
