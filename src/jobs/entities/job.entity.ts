@@ -1,4 +1,5 @@
-import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn, OneToMany } from 'typeorm';
+import { WorkRequest } from '../../work-requests/entities/work-request.entity';
 
 @Entity()
 export class Job {
@@ -7,4 +8,7 @@ export class Job {
 
   @Column()
   name: string;
+
+  @OneToMany((type) => WorkRequest, (workRequest) => workRequest.job)
+  workRequests: WorkRequest[];
 }
