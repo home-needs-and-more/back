@@ -18,14 +18,13 @@ export class JobsController {
   constructor(private readonly jobsService: JobsService) {}
 
   @Post()
-  create(@Body() createJobDto: CreateJobDto) {
+  async create(@Body() createJobDto: CreateJobDto) {
     try {
-      return this.jobsService.create(createJobDto);
+      return await this.jobsService.create(createJobDto);
     } catch (error) {
-      console.error('Error while creating job');
+      console.error(error);
       return new HttpException(
         {
-          status: HttpStatus.INTERNAL_SERVER_ERROR,
           error: 'Error while creating job',
         },
         HttpStatus.INTERNAL_SERVER_ERROR,
@@ -34,14 +33,13 @@ export class JobsController {
   }
 
   @Get()
-  findAll() {
+  async findAll() {
     try {
-      return this.jobsService.findAll();
+      return await this.jobsService.findAll();
     } catch (error) {
-      console.error('Error while getting jobs');
+      console.error(error);
       return new HttpException(
         {
-          status: HttpStatus.INTERNAL_SERVER_ERROR,
           error: 'Error while getting jobs',
         },
         HttpStatus.INTERNAL_SERVER_ERROR,
@@ -50,14 +48,13 @@ export class JobsController {
   }
 
   @Get(':id')
-  findOne(@Param('id') id: number) {
+  async findOne(@Param('id') id: number) {
     try {
-      return this.jobsService.findOne(+id);
+      return await this.jobsService.findOne(+id);
     } catch (error) {
-      console.error('Error while getting job');
+      console.error(error);
       return new HttpException(
         {
-          status: HttpStatus.INTERNAL_SERVER_ERROR,
           error: 'Error while getting job',
         },
         HttpStatus.INTERNAL_SERVER_ERROR,
@@ -66,15 +63,14 @@ export class JobsController {
   }
 
   @Put(':id')
-  update(@Param('id') id: string, @Body() updateJobDto: UpdateJobDto) {
+  async update(@Param('id') id: string, @Body() updateJobDto: UpdateJobDto) {
     try {
-      return this.jobsService.update(+id, updateJobDto);
+      return await this.jobsService.update(+id, updateJobDto);
     } catch (error) {
-      console.error('Error while updating job');
+      console.error(error);
       return new HttpException(
         {
-          status: HttpStatus.INTERNAL_SERVER_ERROR,
-          error: 'Error while getting job',
+          error: 'Error while updating job',
         },
         HttpStatus.INTERNAL_SERVER_ERROR,
       );
@@ -82,15 +78,14 @@ export class JobsController {
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
+  async remove(@Param('id') id: string) {
     try {
-      return this.jobsService.remove(+id);
+      return await this.jobsService.remove(+id);
     } catch (error) {
-      console.error('Error while deleting jobs');
+      console.error(error);
       return new HttpException(
         {
-          status: HttpStatus.INTERNAL_SERVER_ERROR,
-          error: 'Error while deleting jobs',
+          error: 'Error while deleting job',
         },
         HttpStatus.INTERNAL_SERVER_ERROR,
       );
