@@ -37,6 +37,7 @@ export class WorkRequestsService {
     workRequest.city = updateWorkRequestDto.city;
     workRequest.state = updateWorkRequestDto.state;
     workRequest.zipCode = updateWorkRequestDto.zipCode;
+    workRequest.workState = updateWorkRequestDto.workState;
     return this.workRequestsRepository.save(workRequest);
   }
 

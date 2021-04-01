@@ -12,6 +12,8 @@ import {
 import { WorkRequestsService } from './work-requests.service';
 import { CreateWorkRequestDto } from './dto/create-work-request.dto';
 import { UpdateWorkRequestDto } from './dto/update-work-request.dto';
+import { sendEmail } from 'src/config/email.config';
+import { WorkRequest } from './entities/work-request.entity';
 
 @Controller('work-requests')
 export class WorkRequestsController {
@@ -20,7 +22,15 @@ export class WorkRequestsController {
   @Post()
   async create(@Body() createWorkRequestDto: CreateWorkRequestDto) {
     try {
-      return await this.workRequestsService.create(createWorkRequestDto);
+      const workRequest = await this.workRequestsService.create(
+        createWorkRequestDto,
+      );
+      const receiverEmail = workRequest.email;
+      const subject = 'Your request is pending :D';
+      const text = 'pending';
+      const html = '<h1>Pending</h1>';
+      const emailResult = await sendEmail(receiverEmail, subject, text, html);
+      return emailResult;
     } catch (error) {
       console.error(error);
       return new HttpException(
@@ -68,7 +78,30 @@ export class WorkRequestsController {
     @Body() updateWorkRequestDto: UpdateWorkRequestDto,
   ) {
     try {
-      return await this.workRequestsService.update(+id, updateWorkRequestDto);
+      const workRequest: WorkRequest = await this.workRequestsService.update(
+        +id,
+        updateWorkRequestDto,
+      );
+      const receiverEmail = workRequest.email;
+      let subject = 'Your request is ACCEPTED :D';
+      let text = 'ACCEPTED';
+      let html = '<h1>ACCEPTED</h1>';
+      switch (workRequest.workState) {
+        case 'DECLINED':
+          subject = 'Your request is DECLINED :D';
+          text = 'DECLINED';
+          html = '<h1>DECLINED</h1>';
+          break;
+        case 'DONE':
+          subject = 'Your request is DONE :D';
+          text = 'DONE';
+          html = '<h1>DONE</h1>';
+          break;
+        default:
+          break;
+      }
+      const emailResult = await sendEmail(receiverEmail, subject, text, html);
+      return emailResult;
     } catch (error) {
       console.error(error);
       return new HttpException(

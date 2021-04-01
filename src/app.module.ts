@@ -2,7 +2,11 @@ import { Module, ValidationPipe } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { databaseConfig, envConfig } from './config/environment.config';
+import {
+  databaseConfig,
+  emailConfig,
+  envConfig,
+} from './config/environment.config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { JobsModule } from './jobs/jobs.module';
 import { WorkRequestsModule } from './work-requests/work-requests.module';
@@ -16,7 +20,7 @@ import { APP_PIPE } from '@nestjs/core';
         '.env.local',
         // 'env.prod',
       ],
-      load: [databaseConfig, envConfig],
+      load: [databaseConfig, envConfig, emailConfig],
     }),
     TypeOrmModule.forRootAsync({
       imports: [ConfigModule],

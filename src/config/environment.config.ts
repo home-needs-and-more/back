@@ -11,3 +11,11 @@ export const databaseConfig = registerAs('database', () => ({
   username: process.env.DB_USERNAME,
   port: process.env.DB_PORT,
 }));
+
+export const emailConfig = registerAs('email', () => ({
+  senderEmail: process.env.SENDER_EMAIL,
+  clientId: process.env.CLIENT_ID,
+  clientSecret: process.env.CLIENT_SECRET,
+  redirectURI: process.env.REDIRECT_URI,
+  refreshToken: process.env.REFRESH_TOKEN,
+}));
