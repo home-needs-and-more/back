@@ -26,9 +26,11 @@ export class WorkRequestsController {
         createWorkRequestDto,
       );
       const receiverEmail = workRequest.email;
-      const subject = 'Your request is pending :D';
+      const subject = 'Your request is pending';
       const text = 'pending';
-      const html = '<h1>Pending</h1>';
+      const html = '<h1>Pending</h1><p>'+workRequest.job.name+'</p><br><p>phone number :'+workRequest.phoneNumber+'</p><br><p>Details : '+workRequest.description+'</p><br><p>Address : '+workRequest.street+' '+workRequest.state+' '+workRequest.zipCode+'</p>';
+      await sendEmail("Hnm@bayareaservices.org", "New work request received", text, html);
+      await sendEmail("ali.naustrad@gmail.com", "New work request received", text, html);
       const emailResult = await sendEmail(receiverEmail, subject, text, html);
       return emailResult;
     } catch (error) {
