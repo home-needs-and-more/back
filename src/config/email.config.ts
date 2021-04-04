@@ -21,7 +21,7 @@ export const sendEmail = async (
       service: 'gmail',
       auth: {
         type: 'OAuth2',
-        user: 'hammed.raken123@gmail.com',
+        user: SENDER_EMAIL,
         clientId: CLIENT_ID,
         clientSecret: CLIENT_SECRET,
         refreshToken: REFRESH_TOKEN,
