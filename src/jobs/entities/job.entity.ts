@@ -9,6 +9,15 @@ export class Job {
   @Column()
   name: string;
 
+  @Column()
+  description : string;
+
+  @Column()
+  image : string;
+
+  @Column()
+  price : string;
+
   @OneToMany((type) => WorkRequest, (workRequest) => workRequest.job)
   workRequests: WorkRequest[];
 }
